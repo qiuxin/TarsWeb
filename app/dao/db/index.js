@@ -58,9 +58,12 @@ databases.forEach((database) => {
 			idle: pool.idle || 10000
 		},
 		timezone: (() => {
+			//let timezone = String(0 - new Date().getTimezoneOffset() / 60);
+			//return '+' + (timezone.length < 2 ? ('0' + timezone) : timezone) + ':00';
 			let timezone = String(0 - new Date().getTimezoneOffset() / 60);
-			return '+' + (timezone.length < 2 ? ('0' + timezone) : timezone) + ':00';
-		})()  //获取当前时区并做转换
+			let prefix = ((-1 == timezone.indexOf("+")) && (-1 == timezone.indexOf("-"))) ? '+' : '';
+			return prefix + (timezone.length < 2 ? ('0' + timezone) : timezone) + ':00';
+			})() //获取当前时区并做转换
 	});
 
 	// 测试是否连接成功
